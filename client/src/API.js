@@ -5,7 +5,7 @@ This file will contain all the BoilerBooks API endpoints.
 import cookie from 'react-cookie'
 
 const TOKEN_COOKIE = "BOILERBOOKS-JWT"
-const API_PREFIX = "http://devmoney.krakos.net/api"
+const API_PREFIX = "https://purdueieee.org/money/api"
 
 // The APIError is thrown when an API endpoint returns an error instead of
 // a result with a payload.

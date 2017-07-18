@@ -126,7 +126,7 @@ class Layout extends React.Component {
                         <ToolbarGroup lastChild={true}>
                             <IconButton style={{ width: 96, height: 96 }} onClick={this.avatarSelect}>
                                 <Avatar backgroundColor="white" color={lightBlue900}>
-                                    { (this.state.user !== "" ? this.state.user.first : '?').charAt(0) }
+                                    { (this.state.user !== "" ? this.state.user.first.charAt(0) : '?') }
                                 </Avatar>
                             </IconButton>
                             {/* FIXME: Popover.marginRight doesn't work here for whatever reason.*/}
