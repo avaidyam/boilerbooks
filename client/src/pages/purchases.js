@@ -26,9 +26,7 @@ export default class Purchases extends React.Component {
     componentWillMount() {
         document.title = "Purchases"
         API.Purchase.search().then(res => {
-            this.setState({
-                data: res
-            })
+            this.setState({data: res})
         }).catch(r => console.error(r))
     }
 
