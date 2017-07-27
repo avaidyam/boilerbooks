@@ -3,18 +3,19 @@ require_once 'lib/meedo.php';
 require_once 'lib/jwt.php';
 require_once 'lib/flight/Flight.php';
 
-/**
- * @SWG\Info(title="BoilerBooks", version="2.0.0")
- *
- * @SWG\Tag(
- *   name="user",
- *   description="User",
- *   @SWG\ExternalDocumentation(
- *     description="Find out more",
- *     url="http://swagger.io"
- *   )
- * )
- */
+// Stub the getallheaders() func for nginx or similar servers.
+if (!function_exists('getallheaders'))  {
+    function getallheaders() {
+        if (!is_array($_SERVER))
+            return [];
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_')
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+        }
+        return $headers;
+    }
+}
 
 // By versioning the API, we ensure that clients are aware of the specific
 // calls and will be explicit in their intent.  By default use newest API

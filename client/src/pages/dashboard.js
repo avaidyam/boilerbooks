@@ -27,7 +27,6 @@ export default class Dashboard extends React.Component {
                     } else {
                         data.get(thing.parent).children.push({title: thing.name, subtitle: '', children: buds})
                     }
-
                 })
                 var list = Array.from(data.values())
                 this.setState({treeData: list})
