@@ -8,7 +8,6 @@ import Paper from 'material-ui/Paper';
 import Popover from 'material-ui/Popover';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/Menu';
-import SessionStore from '../flux/store.js'
 import Avatar from 'material-ui/Avatar';
 import { lightBlue900, fullWhite } from 'material-ui/styles/colors';
 import { fade } from 'material-ui/utils/colorManipulator';
@@ -16,6 +15,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import UserView from '../components/userview.js'
 import * as API from '../API.js'
+import EventBus from 'eventing-bus';
 
 // Quick util function to generate a copyright notice.
 function copyright(startYear, authors) {
@@ -27,7 +27,6 @@ function copyright(startYear, authors) {
 class Layout extends React.Component {
     state = {
         title: document.title,
-        user: SessionStore.getSession().user,
         openProfile: false,
         openPopover: false,
         anchorElement: null,
@@ -38,10 +37,9 @@ class Layout extends React.Component {
 
     // Match the AppBar title with the document title.
     componentDidMount() {
-        SessionStore.on("change", () => {
-            this.setState({
-                user: SessionStore.getSession().user
-            })
+        EventBus.on("login", (user) => {
+            console.log("received login")
+            //this.setState({me: user})
         });
 
         API.User.view({username: 'me'})
@@ -104,6 +102,7 @@ class Layout extends React.Component {
     }
 
     render() {
+        console.debug(this.state)
         return (
             <div>
                 <Paper rounded={false} zDepth={3} style={{ position: 'fixed', top: 0, width: '100%' }}>
@@ -126,7 +125,7 @@ class Layout extends React.Component {
                         <ToolbarGroup lastChild={true}>
                             <IconButton style={{ width: 96, height: 96 }} onClick={this.avatarSelect}>
                                 <Avatar backgroundColor="white" color={lightBlue900}>
-                                    { (this.state.user !== "" ? this.state.user.first.charAt(0) : '?') }
+                                    { (this.state.me ? this.state.me.name.charAt(0) : '?') }
                                 </Avatar>
                             </IconButton>
                             {/* FIXME: Popover.marginRight doesn't work here for whatever reason.*/}

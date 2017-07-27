@@ -6,9 +6,9 @@ import { Flex, withReflex } from 'reflexbox'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
-import * as Actions from '../flux/actions.js'
 import { APISession, Authenticate, User } from "../API.js";
 import { lightBlue900 } from 'material-ui/styles/colors';
+import EventBus from 'eventing-bus'
 
 const inputSubmitStyle = {
     cursor: 'pointer',
@@ -57,7 +57,7 @@ class Login extends React.Component {
             return User.view({username: 'me'})
         }).then(res => {
             console.debug(res)
-            Actions.setUser(res)
+            EventBus.publish("login", res)
             this.props.router.replace('/dashboard')
         }).catch(err => {
             console.warn("error with auth request", err)
